@@ -84,7 +84,23 @@ limit
 
 ## Architecture and Suggested Changes
 
+In order to solve the api scaling problem I propose a micro-service solution based on docker instances of the api
 
+This solution requires a datastore (such as redis), multiple instances of the api (via docker containers), and a load balancer (nginx) to
+handle the 1 million user per minute problem. This solution provides horizontal scaling via the docker containers instances the number of
+ which can be increased to meet the required demand. The bottleneck then becomes the datastore which can be clustered to accomodate the 
+ load. This solution is independent of the specs for each machine, though enabling node clustering can provide increased performance on 
+ severs with more cores. 
+ 
+Another solution to the problem can be achieved using AWS Lambda for a serverless backend.
+
+## Measuring API performance
+
+For this example Apache Benchmark was chosen to test the api performance. The performance metrics logged for this example are misleading 
+as the performance testing was done on the same machine that the api was running on. For more accurate results benchmarking software 
+should be run from a different machine. 
+
+Other examples of benchmarking tools include Artillery and Bombardier. 
 
 
 
