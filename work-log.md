@@ -61,6 +61,11 @@ Transfer rate:          720.17 [Kbytes/sec] received
   * Install redis, uuid
   * Generate a uuid, push the uuid and post doc to redis
   * Return uuid
+  * Deploy docker instance
+    * sudo docker build . -t busyapi
+    * sudo docker run -p 3001:3000 -e "REDIS_URL=redis://129.196.196.100:6379" busyapi &
+    
+
 ```
 Concurrency Level:      100
 Time taken for tests:   31.036 seconds
