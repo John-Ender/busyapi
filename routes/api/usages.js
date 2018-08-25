@@ -1,12 +1,17 @@
-module.exports = function(app){
-    app.post('/api/usages', function(req, res){
+var redis = require('redis');
+var redisUrl = process.env.REDIS_URL;
 
-        // Store the supplied usage data
-        app.usages.push(req.body);
+console.log(redisUrl);
+var client = redis.createClient(redisUrl);
 
-        var usageId = app.usages.length;
-        console.log('Stored usage count: ' + usageId);
+var uuid = require('uuid/v1');
 
-        res.status(201).json({'id':usageId});
+module.exports = function (app) {
+    app.post('/api/usages', function (req, res) {
+        var id = uuid();
+
+        client.set(id, JSON.stringify(req.body), function () {
+            res.status(201).json({'id': id});
+        });
     });
 }
